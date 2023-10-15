@@ -6,10 +6,10 @@ from matplotlib.colors import ListedColormap
 # Defina os parâmetros
 epsilon = 1e-6
 kmax = 20
-N = 100  # Tamanho da grade
+N = 100
 
 # Defina as soluções conhecidas do sistema
-solutions = [(1, 0), (-1, 0)]
+solutions = [(-1, 0), (1, 0)]
 
 # Crie uma matriz para armazenar as cores das regiões de convergência
 colors_convergence = np.zeros((N+1, N+1), dtype=int)
@@ -18,7 +18,7 @@ colors_convergence = np.zeros((N+1, N+1), dtype=int)
 iterations = np.zeros((N+1, N+1), dtype=int)
 
 # Crie uma paleta de cores para as soluções
-colormap = ListedColormap(['r', 'g'])
+colormap = ListedColormap(['b', 'gold'])
 
 # Função para o sistema de equações
 def f(x, y):
@@ -50,22 +50,18 @@ for i in range(N+1):
                 break
 
         # Verifique para qual solução (se alguma) o método convergiu
-        dif_menor = 10000000
         for idx, sol in enumerate(solutions):
-            dif = np.linalg.norm([x, y] - np.array(sol))
-            if  dif < epsilon and dif < dif_menor:
-                dif_menor = dif
-                colors_convergence[j, i] = idx # Cor 1 ou 2
-                print(round(x0,3), round(y0,3), " sol = ", idx, " its = ",k+1)
-                #break
+            if np.linalg.norm([x, y] - np.array(sol)) < epsilon:
+                colors_convergence[j, i] = idx  # Cor 1, 2 ou 3
+                break
 
         iterations[j, i] = k + 1 if converged else kmax  # Número de iterações
 
 # Crie o mapa de cores das regiões de convergência
 plt.figure(figsize=(10, 5))
 plt.imshow(colors_convergence, extent=(-1, 1, -1, 1), cmap=colormap)
-plt.colorbar(ticks=[1, 2], label='Solutions (1 or 2)')
-plt.title('Convergence Regions')
+plt.colorbar(ticks=[1, 2],fraction = 0.046, pad = 0.12, orientation = "horizontal",label='Soluções [(-1,0) ou (1,0)]')
+plt.title('Regiões de Convergencia')
 plt.xlabel('x')
 plt.ylabel('y')
 plt.show()
@@ -73,8 +69,8 @@ plt.show()
 # Crie o mapa de cores do número de iterações
 plt.figure(figsize=(10, 5))
 plt.imshow(iterations, extent=(-1, 1, -1, 1), origin='lower', cmap='viridis')
-plt.colorbar(label='Iterations')
-plt.title('Number of Iterations')
+plt.colorbar(label='Numero de iterações')
+plt.title('Iterações')
 plt.xlabel('x')
 plt.ylabel('y')
 plt.show()

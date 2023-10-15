@@ -18,7 +18,7 @@ colors_convergence = np.zeros((N+1, N+1), dtype=int)
 iterations = np.zeros((N+1, N+1), dtype=int)
 
 # Crie uma paleta de cores para as soluções
-colormap = ListedColormap(['r', 'g', 'b'])
+colormap = ListedColormap(['gold', 'blue', 'green'])
 
 # Função para o sistema de equações
 def f(x, y):
@@ -60,8 +60,8 @@ for i in range(N+1):
 # Crie o mapa de cores das regiões de convergência
 plt.figure(figsize=(10, 5))
 plt.imshow(colors_convergence, extent=(-1.5, 1.5, -1.5, 1.5), origin='lower', cmap=colormap)
-plt.colorbar(ticks=[1, 2, 3], label='Solutions (1, 2, or 3)')
-plt.title('Convergence Regions')
+plt.colorbar(ticks=[1, 2, 3],fraction = 0.046, pad = 0.12, orientation = "horizontal", label='Soluções [(1, 0) | (−1/2,−√(3)/2) | (-1/2, √(3)/2)]')
+plt.title('Regiões de Convergencia')
 plt.xlabel('x')
 plt.ylabel('y')
 plt.show()
@@ -69,8 +69,8 @@ plt.show()
 # Crie o mapa de cores do número de iterações
 plt.figure(figsize=(10, 5))
 plt.imshow(iterations, extent=(-1.5, 1.5, -1.5, 1.5), origin='lower', cmap='viridis')
-plt.colorbar(label='Iterations')
-plt.title('Number of Iterations')
+plt.colorbar(label='Numero de iterações')
+plt.title('Iterações')
 plt.xlabel('x')
 plt.ylabel('y')
 plt.show()
